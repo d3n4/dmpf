@@ -18,7 +18,7 @@
             }
             
             Public Static Function Load($path){
-                throw new \Exception('Not Implemented');
+                // throw new \Exception('Not Implemented');
             }
             
             Public Static Function Register(){
