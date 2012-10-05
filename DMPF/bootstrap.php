@@ -1,5 +1,2 @@
 <?
-    namespace DMPF
-    {
-        
-    }
+    
