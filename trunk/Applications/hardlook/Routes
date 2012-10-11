@@ -1,5 +1,1 @@
-*           /*?a=*           Application.Index('Hello World {1}!', '{0}');
-
-/user?a=5
-
-Application.Index('Hello World 5!', 'user');
+*           /([a-zA-Z]+)           Application.Index
