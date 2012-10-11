@@ -1,34 +1,80 @@
 <?
-    namespace DMPF\Utils
+
+    /**
+     * Class to automatically load classes by class name
+     */
+
+    Abstract Class Loader
     {
-        Class Loader
-        {
-            Protected Static $Index = Array();
-            
-            Public Static Function index($path){
-                $this->Index[trim($path)] = true;
-            }
-            
-            Public Static Function deindex($path){
-                unset($this->Index[trim($path)]);
-            }
-            
-            Public Static Function indexed($path){
-                return isset($this->Index[trim($path)]);
-            }
-            
-            Public Static Function Load($path){
-                // throw new \Exception('Not Implemented');
-            }
-            
-            Public Static Function Register(){
-                spl_autoload_register('DMPF\Utils\Loader::Load');
-            }
-            
-            Public Static Function unRegister(){
-                spl_autoload_unregister('DMPF\Utils\Loader::Load');
-            }
+        /**
+         * Indexes memory
+         * @var array List of indexes
+         */
+        Protected Static $Index = Array();
+        
+        /**
+         * Aliasses memory
+         * @var array List of aliasses
+         */
+        Protected Static $Alias = Array();
+        
+        /**
+         * Create alias to include file by class name
+         * @param string $Class Class name
+         * @param string $File File name
+         */
+        Public Static Function alias($Class, $File){
+            self::$Alias[$Class] = $File;
         }
         
-        Loader::Register();
+        /**
+         * Index files from directory
+         * @param string $path Folder path
+         */
+        Public Static Function index($path){
+            self::$Index[trim($path)] = true;
+        }
+
+        /**
+         * Remove indexing from directory
+         * @param string $path Folder path
+         */        
+        Public Static Function deindex($path){
+            unset(self::$Index[trim($path)]);
+        }
+
+        /**
+         * Check folder for indexing
+         * @param string $path Folder path
+         * @return bool
+         */
+        Public Static Function indexed($path){
+            return isset(self::$Index[trim($path)]);
+        }
+
+        /**
+         * Try to load class manual
+         * @param string $Class class pattern name
+         * @return bool Result
+         */        
+        Public Static Function load($Pattern){
+            ForEach( self::$Index As $Index => $Enabled  )
+                ForEach( glob($Index.'/'.$Pattern.'.php') As $File )
+                    IF( file_exists($File) && $Enabled )
+                        require_once $File;
+        }
+
+        /**
+         * Initialize loader
+         */
+        Public Static Function register(){
+            spl_autoload_register('Loader::load');
+        }
+
+        /**
+         * Deinitialize loader
+         */
+        Public Static Function unRegister(){
+            spl_autoload_unregister('Loader::load');
+        }
     }

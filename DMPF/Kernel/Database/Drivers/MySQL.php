@@ -1,0 +1,4 @@
+<?
+    Class MySQL Implements IDriver {
+        
+    }
