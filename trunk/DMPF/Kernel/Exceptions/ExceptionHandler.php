@@ -6,9 +6,10 @@ Abstract Class ExceptionHandler {
         $ErrorTitle = htmlspecialchars($ErrorTitle);
         $ErrorDescription = $ErrorDescription;
         $ErrorFile = htmlspecialchars($ErrorFile);
-        $ErrorLine = htmlspecialchars($ErrorLine); 
-        ForEach($ErrorLines as $errLn => $ErrorCode)
-            $ErrorLines[$errLn] = htmlspecialchars($ErrorCode);
+        $ErrorLine = htmlspecialchars($ErrorLine);
+        /*ForEach($ErrorLines as $errLn => $ErrorCode)
+            $ErrorLines[$errLn] = str_replace(array("\r", "\n", '<span', '</span>', '<?', '?>'), array('<p', '</p>', '', ''), highlight_string('<?'.$ErrorCode.'?>', true));*/
+        //print_r($ErrorLines);
         ?>
     <!DOCTYPE html>
     <html>
@@ -129,13 +130,18 @@ Abstract Class ExceptionHandler {
                 color: #A31012;
                 
             }
-
+            
             pre.error span.marker
             {
                 background: #A31012;
                 color: #fff;
                 text-shadow: 1px 1px 1px rgba(0,0,0,.3);
                 font-weight: bold;
+            }
+            
+            .errorline
+            {
+                background: #FFFFFF;
             }
         </style>
     </head>
@@ -149,24 +155,22 @@ Abstract Class ExceptionHandler {
         <h2>In <?=$ErrorFile?> at line <?=$ErrorLine?>.</h2>
         <div>
             <? $ln = 0; ForEach($ErrorLines as $Line=>$Code){ $ln++;
+            $Code = str_replace( array("\r", "\n", '&lt;?', '?&gt;', '<code>', '</code>'), '', highlight_string('<?'.$Code.'?>', true));
             $iserrln = false;
             IF( $Line == $ErrorLine )
             {
                 $iserrln = true;
-                For($i=0;$i<strlen($Code)-1;$i++)
-                {
-                    IF($Code[$i] == ' ' or $Code[$i] == "\t")
-                        continue;
-                    $marker = $Code[$i];
-                    break;
-                }
-
-                $Code = explode($marker, $Code, 2);
-
-                $Code = $Code[0].'<span class="marker">'.$marker.'</span>'.$Code[1];
+                /*$Code = explode('">', $Code);
+                $Tabs = explode('<', $Code[2]);
+                $Tabs = $Tabs[0];
+                unset($Code[2]);
+                $Marker = $Code[3][0];
+                $Code[3][0] = '';
+                $Code = implode('">', $Code);
+                $Code = $Tabs.'<span class="marker">'.$Marker.'</span>'.$Code;*/
             }
             ?>
-            <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code"><?=$Code?></span></pre>
+            <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
             <? } IF(sizeof($ErrorBackTrace)>2){ ?>
             <h2>Backtrace</h2>
             <?
@@ -212,7 +216,7 @@ Abstract Class ExceptionHandler {
                     $trace = '<span class="marker">'.$marker.'</span>'.$trace;
                 }
                 ?>
-                <pre<?IF($Error){?> class="error" <?}?>><span class="line"><?=$ecline?></span><span class="code"><?=$trace?></span></pre>
+                <pre<?IF($Error){?> class="error" <?}?>><span class="line"><?=$ecline?></span><span class="code<?IF($Error){?> errorline<?}?>"><?=$trace?></span></pre>
                 <?
                 $ecline++;
             }

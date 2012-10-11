@@ -11,10 +11,9 @@
          */
         
         Public Static Function Boot(){
-            echo 'boot';
-            echo 'asd';
-            #file_get_contents('bad');
-            #throw new Exception('test');
+            echo 'Booting...';
+            $bootdata = file_get_contents('.boot');
+            boot($bootdata);
             return false;
         }
     }
