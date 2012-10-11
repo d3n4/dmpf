@@ -3,11 +3,12 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    define('APPLICATION', 'hardlook');
+    
     define('ROOT', str_replace('\\','/', dirname(__FILE__)));
     define('DMPF_PATH', ROOT.'/DMPF');
     define('KERNEL', DMPF_PATH.'/Kernel');
     define('APPLICATIONS', ROOT.'/Applications');
-    define('APPLICATION', 'hardlook');
     require_once KERNEL.'/Utils/Loader.php';
     
     Loader::index(ROOT);
@@ -16,17 +17,26 @@
     Loader::index(KERNEL.'/Exceptions');
     Loader::index(KERNEL.'/Debug');
     Loader::index(KERNEL.'/Utils');
+    Loader::index(KERNEL.'/Database');
+    Loader::index(KERNEL.'/Database/Drivers');
     Loader::index(APPLICATIONS);
     Loader::register();
     
+    Config::Load( APPLICATIONS.'/'.APPLICATION.'/config.ini' );
+    
     ExceptionHandler::Initialize();
     
-    Config::Load(APPLICATIONS.'/'.APPLICATION.'/config.ini');
+    $Stopwatch = Stopwatch::Create('Framework');
+    
+    Storage::set( 'DATABASE', new Driver() );
     
     try
     {
         IF(!Bootstrap::Boot())
-            throw new BootstrapException('bootstrap error');
+            throw new BootstrapException('Failed to boot up framework');
     } catch (Exception $e) {
         ExceptionHandler::SimulateException($e);
     }
+    
+    IF(Config::Read('developer')->debug)
+        $Stopwatch->Log();
