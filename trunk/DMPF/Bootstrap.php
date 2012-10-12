@@ -11,9 +11,10 @@
          */
         
         Public Static Function Boot(){
-            echo 'Booting...';
-            $bootdata = file_get_contents('.boot');
-            boot($bootdata);
-            return false;
+            IF(!Router::Instance()->Proceed()){
+                throw new RouteNotFoundException('Route for url "'.$_GET['uri'].'" not found.');
+                return false;
+            }
+            return true;
         }
     }
