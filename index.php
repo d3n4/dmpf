@@ -9,26 +9,36 @@
     define('DMPF_PATH', ROOT.'/DMPF');
     define('KERNEL', DMPF_PATH.'/Kernel');
     define('APPLICATIONS', ROOT.'/Applications');
+    define('APPLICATION_DIR', APPLICATIONS.'/'.APPLICATION);
     require_once KERNEL.'/Utils/Loader.php';
     
     Loader::index(ROOT);
     Loader::index(DMPF_PATH);
     Loader::index(KERNEL);
+    Loader::index(KERNEL.'/Classes');
     Loader::index(KERNEL.'/Exceptions');
     Loader::index(KERNEL.'/Debug');
     Loader::index(KERNEL.'/Utils');
     Loader::index(KERNEL.'/Database');
     Loader::index(KERNEL.'/Database/Drivers');
+    Loader::index(KERNEL.'/Application');
+    Loader::index(KERNEL.'/Application/Controllers');
+    Loader::index(KERNEL.'/Application/Models');
+    Loader::index(KERNEL.'/Application/Views');
+    Loader::index(KERNEL.'/Application/Router');
     Loader::index(APPLICATIONS);
+    Loader::index(APPLICATION_DIR.'/Controllers');
+    Loader::index(APPLICATION_DIR.'/Models');
+    Loader::index(APPLICATION_DIR.'/Views');
     Loader::register();
     
-    Config::Load( APPLICATIONS.'/'.APPLICATION.'/config.ini' );
+    Storage::init();
+    
+    Config::Load( APPLICATION_DIR.'/config.ini' );
     
     ExceptionHandler::Initialize();
     
     $Stopwatch = Stopwatch::Create('Framework');
-    
-    Storage::set( 'DATABASE', new Driver() );
     
     try
     {

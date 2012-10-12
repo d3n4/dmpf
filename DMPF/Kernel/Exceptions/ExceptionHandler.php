@@ -1,6 +1,6 @@
 <?
 Abstract Class ExceptionHandler {
-    Protected Static Function ShowError($ErrorTitle, $ErrorDescription, $ErrorFile, $ErrorLine, $ErrorLines, $ErrorBackTrace)
+    Protected Static Function ShowError($ErrorTitle, $ErrorDescription, $ErrorFile, $ErrorLine, $ErrorLines, $ErrorBackTrace, $SkipLine = 1)
     {
         ob_clean();
         $ErrorTitle = htmlspecialchars($ErrorTitle);
@@ -171,7 +171,7 @@ Abstract Class ExceptionHandler {
             }
             ?>
             <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
-            <? } IF(sizeof($ErrorBackTrace)>2){ ?>
+            <? } IF(sizeof($ErrorBackTrace)>0){ ?>
             <h2>Backtrace</h2>
             <?
             $ecline = 1;
@@ -208,7 +208,7 @@ Abstract Class ExceptionHandler {
                 ELSE
                     $trace .= $ErrorFile;
                 $trace .= '</small>';
-                $Error = $ecline == 1;
+                $Error = $ecline == $SkipLine;
                 IF($Error)
                 {
                     $marker = $trace[0];
@@ -245,7 +245,7 @@ Abstract Class ExceptionHandler {
                 $ret = 'array( ';
                 $separtor = '';
                 foreach ($arg as $k => $v) {
-                    $ret .= $separtor.getArgument($k).' => '.getArgument($v);
+                    $ret .= $separtor.self::getArgument($k).' => '.self::getArgument($v);
                     $separtor = ', ';
                 }
                 $ret .= ' )';
@@ -257,9 +257,10 @@ Abstract Class ExceptionHandler {
         }
     }
 
-    Public Static Function SimulateError($errno, $errstr, $errfile, $errline, $e = null)
+    Public Static Function SimulateError($errno, $errstr, $errfile, $errline, $e = null, $SkipLine = 1)
     {
-        IF(!Config::Read('developer')->debug) return true;
+        $devConf = Config::Read('developer');
+        IF(!$devConf['debug']) return true;
         # IF(!(error_reporting() & $errno)) return true; #
 
          $errorType = array (
@@ -280,7 +281,7 @@ Abstract Class ExceptionHandler {
          
         $err = 'CAUGHT ';
         
-        IF($e !== null)
+        IF($e !== null && gettype($e) == 'object')
             $err .= get_class($e);
         ELSE
             $err .= 'EXCEPTION';
@@ -289,27 +290,39 @@ Abstract Class ExceptionHandler {
             $err = $errorType[$errno];
 
         $file = file($errfile);
-
+        
         $errlines = array();
 
-        For( $ln = $errline - 5; $ln <  $errline + 5; $ln ++ )
+        $eclines = 10;
+        
+        For( $ln = $errline - $eclines; $ln <  $errline + $eclines - 1; $ln ++ )
             IF(isset($file[$ln]))
                 $errlines[$ln+1] = $file[$ln];
-
+        
         $backtrace = debug_backtrace();
+            
+        IF(is_object($e))
+            $backtrace = $e->getTrace();
 
         $Skip = Array('filemtime');
 
-        ForEach($Skip As $Func)
-            IF($backtrace[1]['function'] == $Func)
-                return true;
+        ForEach($backtrace As $trace)
+            ForEach($Skip As $Func)
+                    IF($trace['function'] == $Func)
+                    return true;
 
-        self::ShowError($err, $errstr, $errfile, $errline, $errlines, $backtrace); 
+        self::ShowError($err, $errstr, $errfile, $errline, $errlines, $backtrace, $SkipLine); 
         return true;
     }
 
     Public Static Function SimulateException($Exception)
     {
+        $devConf = Config::Read('developer');
+        IF($devConf['beforeThrow'])
+            ForEach($Exception->getTrace() As $SkipLine => $Trace)
+                IF(isset($Trace['file']) && isset($Trace['line']))
+                    return self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Trace['file'], $Trace['line'], $Exception, $SkipLine + 1);
+        
         self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Exception->getFile(), $Exception->getLine(), $Exception);
     }
     

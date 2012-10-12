@@ -15,7 +15,8 @@
          * @return stdClass Variables
          */
         Public Static Function Read($Key){
-            return Converter::ArrayToObject(self::$Memory[$Key]);
+            /*Converter::ArrayToObject(self::$Memory[$Key])*/
+            return self::$Memory[$Key];
         }
         
         /**

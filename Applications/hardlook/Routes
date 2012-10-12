@@ -1,1 +1,6 @@
-*           /([a-zA-Z]+)?([0-9]+)           Application.Index
+# User
+GET             /user/([a-zA-Z0-9]+)            Users.Index
+POST            /user/([a-zA-Z0-9]+)            Users.Form
+
+# Data
+*           /data           Data.Index

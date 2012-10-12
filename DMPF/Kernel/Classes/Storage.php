@@ -10,6 +10,10 @@
          */
         Protected Static $Storage = Array();
         
+        Public Static Function init(){
+            self::$Storage = Array();
+        }
+        
         /**
          * Save element in storage
          * @param string $Key
@@ -27,4 +31,13 @@
         Public Static Function get($Key){
             return self::$Storage[$Key];
         }
+    }
+    
+    /**
+     * Get object from framework storage
+     * @param string $Name Object name
+     * @return mixed Object
+     */
+    Function c($Name){
+        return Storage::get($Name);
     }
