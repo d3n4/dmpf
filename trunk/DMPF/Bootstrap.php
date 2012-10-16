@@ -12,7 +12,7 @@
         
         Public Static Function Boot(){
             IF(!Router::Instance()->Proceed()){
-                throw new RouteNotFoundException('Route for url "'.$_GET['uri'].'" not found.');
+                throw new RouteNotFoundException('Route for url "'.Router::$Uri.'" not found.');
                 return false;
             }
             return true;

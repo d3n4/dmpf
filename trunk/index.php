@@ -48,5 +48,6 @@
         ExceptionHandler::SimulateException($e);
     }
     
-    IF(Config::Read('developer')->debug)
+    $devConf = Config::Read('developer');
+    IF($devConf['debug'])
         $Stopwatch->Log();

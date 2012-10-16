@@ -3,6 +3,7 @@
      * Router
      */
     Class Router Extends Properties {
+        Public Static $Uri;
         Protected $m_Routes;
         Public Function __construct() {
             ForEach( (Array) file( APPLICATIONS.'/'.APPLICATION.'/Routes' ) As $RouteString ){
@@ -78,6 +79,7 @@
          */
         Public Function ProceedEx($uri){
             $Route = $this->Find($uri);
+            self::$Uri = $uri;
             IF($Route){
                 $arguments = array();
                 preg_match_all('|'.$Route->Uri.'|Uis', $uri, $arguments);

@@ -173,55 +173,57 @@ Abstract Class ExceptionHandler {
             <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
             <? } IF(sizeof($ErrorBackTrace)>0){ ?>
             <h2>Backtrace</h2>
-            <?
-            $ecline = 1;
-            ForEach ($ErrorBackTrace as $entry) 
-            {
-                IF($entry['function'] == 'SimulateError' or $entry['function'] == 'SimulateException') continue;
-
-                IF(isset($entry['class']))
-                    $trace = $entry['class'].'::'.$entry['function'];
-                ELSE IF(isset($entry['function']))
-                    $trace =  $entry['function'];
-
-                $trace .= " (";
-
-                $fargs = '';
-
-                IF(sizeof($entry['args'])>0)
+            <div>
+                <?
+                $ecline = 1;
+                ForEach ($ErrorBackTrace as $entry) 
                 {
-                    $fargs .= ' ';
-                    ForEach((array)$entry['args'] as $argId=>$arg)
+                    IF($entry['function'] == 'SimulateError' or $entry['function'] == 'SimulateException') continue;
+
+                    IF(isset($entry['class']))
+                        $trace = $entry['class'].'::'.$entry['function'];
+                    ELSE IF(isset($entry['function']))
+                        $trace =  $entry['function'];
+
+                    $trace .= " (";
+
+                    $fargs = '';
+
+                    IF(sizeof($entry['args'])>0)
                     {
-                        $fargs .= self::getArgument ($arg);
-                        IF( $argId < sizeof($entry['args'])-1 )
-                            $fargs .= ', ';
+                        $fargs .= ' ';
+                        ForEach((array)$entry['args'] as $argId=>$arg)
+                        {
+                            $fargs .= self::getArgument ($arg);
+                            IF( $argId < sizeof($entry['args'])-1 )
+                                $fargs .= ', ';
+                        }
+                        $fargs .= ' ';
                     }
-                    $fargs .= ' ';
+
+                    $trace .= $fargs;
+
+                    $trace .= ')<small style="color: gray;"> ';
+                    IF(isset($entry['file']))
+                        $trace .= $entry['file'];
+                    ELSE
+                        $trace .= $ErrorFile;
+                    $trace .= '</small>';
+                    $Error = $ecline == $SkipLine;
+                    IF($Error)
+                    {
+                        $marker = $trace[0];
+                        $trace = substr($trace,1,strlen($trace)-1);
+                        $trace = '<span class="marker">'.$marker.'</span>'.$trace;
+                    }
+                    ?>
+                    <pre<?IF($Error){?> class="error" <?}?>><span class="line"><?=$ecline?></span><span class="code<?IF($Error){?> errorline<?}?>"><?=$trace?></span></pre>
+                    <?
+                    $ecline++;
                 }
-
-                $trace .= $fargs;
-
-                $trace .= ')<small style="color: gray;"> ';
-                IF(isset($entry['file']))
-                    $trace .= $entry['file'];
-                ELSE
-                    $trace .= $ErrorFile;
-                $trace .= '</small>';
-                $Error = $ecline == $SkipLine;
-                IF($Error)
-                {
-                    $marker = $trace[0];
-                    $trace = substr($trace,1,strlen($trace)-1);
-                    $trace = '<span class="marker">'.$marker.'</span>'.$trace;
                 }
                 ?>
-                <pre<?IF($Error){?> class="error" <?}?>><span class="line"><?=$ecline?></span><span class="code<?IF($Error){?> errorline<?}?>"><?=$trace?></span></pre>
-                <?
-                $ecline++;
-            }
-            }
-            ?>
+            </div>
         </div>
     </body>
     </html>
@@ -321,7 +323,8 @@ Abstract Class ExceptionHandler {
         IF($devConf['beforeThrow'])
             ForEach($Exception->getTrace() As $SkipLine => $Trace)
                 IF(isset($Trace['file']) && isset($Trace['line']))
-                    return self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Trace['file'], $Trace['line'], $Exception, $SkipLine + 1);
+                    IF(!in_array($Trace['function'], $devConf['skipFunctions']))
+                        return self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Trace['file'], $Trace['line'], $Exception, $SkipLine + 1);
         
         self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Exception->getFile(), $Exception->getLine(), $Exception);
     }
