@@ -27,4 +27,13 @@
             ELSE
               return False;
         }
+        
+        Public Static Function pma2Array($pma) 
+        { 
+            $rt = Array();
+            For ($z = 0;$z < sizeof($pma);$z++)
+                For ($x = 0;$x < sizeof($pma[$z]);$x++)
+                    $rt[$x][$z] = $pma[$z][$x];  
+            return $rt; 
+        } 
     }

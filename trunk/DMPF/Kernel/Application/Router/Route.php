@@ -2,7 +2,7 @@
     /**
      * Route
      */
-    Class Route extends Properties {
+    Class Route extends Properties implements IRoute {
         
         /**
          * Constants
@@ -18,7 +18,8 @@
         # Properties #
         Public Function getMethod(){return $this->m_Method;}
         Public Function getUri(){return $this->m_Uri;}
-        Public Function getController(){return $this->m_Controller;}
+        Public Function getControllerName(){return $this->m_Controller;}
+        Public Function getController(){return $this->m_Controller.'.'.$this->m_Action;}
         Public Function getAction(){return $this->m_Action;}
         
         Public Function __construct($Method, $Uri, $Controller, $Action) {

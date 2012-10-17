@@ -1,6 +1,8 @@
-# User
-GET             /user/([a-zA-Z0-9]+)            Users.Index
-POST            /user/([a-zA-Z0-9]+)            Users.Form
+# Data Controller
+GET /data Data.Index
 
-# Data
-*           /data           Data.Index
+# Users Controller
+* /azd Users.Index
+POST /id([0-9]+) Users.Form
+GET /id([0-9]+) Users.Profile
+

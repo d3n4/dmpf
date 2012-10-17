@@ -10,6 +10,37 @@
         Const EmptyChar = '';
         
         /**
+         * Cut string by length from left
+         * @param string $string input
+         * @param int $length length
+         * @return string cut result
+         */
+        Public Static Function CutLeft($string, $length){
+            return substr($string, $length, strlen($string));
+        }
+        
+        /**
+         * Cut string by length from right
+         * @param string $string input
+         * @param int $length length
+         * @return string cut result
+         */
+        Public Static Function CutRight($string, $length){
+            return substr($string, 0, strlen($string) - $length);
+        }
+        
+        /**
+         * Cut string by length from end
+         * @param string $string input
+         * @param int $left left length
+         * @param int $right left length
+         * @return string cut result
+         */
+        Public Static Function Cut($string, $left, $right){
+            return String::CutLeft(String::CutRight($string, $right), $left);
+        }
+        
+        /**
          * Check is string start with delimiter
          * @param string $delimiter Delimiter
          * @param string $string String
