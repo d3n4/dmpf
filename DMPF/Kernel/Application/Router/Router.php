@@ -6,8 +6,14 @@
         Public Static $Uri;
         Protected $m_Routes;
         Public Function __construct() {
-            ForEach( (Array) file( APPLICATIONS.'/'.APPLICATION.'/Routes' ) As $RouteString ){
-                IF(strlen(trim($RouteString))>0)
+            
+            $devConf = Config::Read('developer');
+            IF($devConf['autoRouter'])
+                self::Generate();
+            
+            ForEach( (Array) file( ROUTES_FILE ) As $RouteString ){
+                $RouteString = trim($RouteString);
+                IF(strlen($RouteString)>0)
                 {
                     IF($RouteString[0] != '#' && $RouteString[0] != ';'){
                         $RoutesArray = explode(' ', $RouteString);
@@ -42,6 +48,32 @@
         }
         
         /**
+         * Generate routes file
+         */
+        Public Static Function Generate(){
+            $Routes = '';
+            ForEach( (Array) glob(APPLICATION_DIR.'/Controllers/*.php') As $ControllerFile )
+            {
+                $ControllerContent = file_get_contents($ControllerFile);
+                $ControllerNames = array();
+                preg_match_all('/class\s(.*)\s/Uis', $ControllerContent, $ControllerNames);
+                IF(!isset($ControllerNames[1]))
+                   return;
+                IF(!isset($ControllerNames[1][0]))
+                    return;
+                $ControllerName = $ControllerNames[1][0];
+                $ControllerRoutes = array();
+                preg_match_all('/#\s(GET|POST|\*)\s(.+)\s#\s(.*)Function ([a-zA-Z0-9\_]+)[\(]/Uis', $ControllerContent, $ControllerRoutes);
+                String::Append("# ".$ControllerName." Controller\r\n", $Routes);
+                ForEach( (Array) Converter::pma2Array($ControllerRoutes) As $Route )
+                    IF(sizeof($Route) > 0)
+                        String::Append(String::Format("{0} {1} {2}.{3}\r\n", $Route[1], $Route[2], $ControllerName, $Route[4]), $Routes);
+                String::Append("\r\n", $Routes);
+            }
+            file_put_contents(ROUTES_FILE, $Routes);
+        }
+        
+        /**
          * Get Instance of router class
          * @return Router Instance of Router class
          */
@@ -50,13 +82,25 @@
         }
         
         /**
-         * Call router action
-         * @param Route $Route
-         * @param array $Arguments
+         * Call router action by route
+         * @param IRoute $Route route
+         * @param array $Arguments arguments
+         * @return bool Action result
          */
-        Public Function Call(Route $Route, $Arguments){
-            $Controller = new $Route->Controller();
-            $callback = Array( $Controller, $Route->Action );
+        Public Function CallByRoute(IRoute $Route, $Arguments = Array()){
+            return self::Call($Route->getController(), $Arguments);
+        }
+        
+        /**
+         * Call router action by name
+         * @param string $Controller controller name
+         * @param array $Arguments arguments
+         * @return bool Action result
+         */
+        Public Static Function Call($Controller, $Arguments = Array()){
+            $Controller = explode('.', $Controller);
+            $ctrl = new $Controller[0]();
+            $callback = Array( $ctrl, $Controller[1] );
             IF(is_callable($callback)){
                 call_user_func_array ($callback, $Arguments);
                 return true;
@@ -79,13 +123,13 @@
          */
         Public Function ProceedEx($uri){
             $Route = $this->Find($uri);
-            self::$Uri = $uri;
+            self::$Uri = String::CutRight($uri, 1);
             IF($Route){
                 $arguments = array();
                 preg_match_all('|'.$Route->Uri.'|Uis', $uri, $arguments);
                 IF(isset($arguments[1]))
                     $arguments = $arguments[1];
-                return $this->Call ($Route, $arguments);
+                return $this->CallByRoute ($Route, $arguments);
             }
             return false;
         }

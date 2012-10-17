@@ -58,6 +58,8 @@
          * @return bool Result
          */        
         Public Static Function load($Pattern){
+            IF(isset(self::$Alias[$Pattern]))
+                $Pattern = self::$Alias[$Pattern];
             ForEach( self::$Index As $Index => $Enabled  )
                 ForEach( glob($Index.'/'.$Pattern.'.php') As $File )
                     IF( file_exists($File) && $Enabled )

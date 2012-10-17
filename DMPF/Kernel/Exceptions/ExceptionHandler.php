@@ -171,7 +171,7 @@ Abstract Class ExceptionHandler {
             }
             ?>
             <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
-            <? } IF(sizeof($ErrorBackTrace)>0){ ?>
+            <? } IF($ErrorBackTrace && sizeof($ErrorBackTrace)>1){ ?>
             <h2>Backtrace</h2>
             <div>
                 <?
@@ -240,7 +240,7 @@ Abstract Class ExceptionHandler {
             case 'string':
                 return( '"'.str_replace( array("\n"), array(''), $arg ).'"' );
             case 'boolean':
-                return String($arg);
+                return $arg ? 'true' : 'false';
             case 'object':
                 return 'object('.get_class($arg).')';
             case 'array':
@@ -290,8 +290,11 @@ Abstract Class ExceptionHandler {
         
         IF (@array_key_exists($errno, $errorType))
             $err = $errorType[$errno];
-
-        $file = file($errfile);
+        
+        $file = Array();
+        
+        IF(file_exists($errfile))
+            $file = file($errfile);
         
         $errlines = array();
 
