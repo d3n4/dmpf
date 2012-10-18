@@ -1,3 +1,1 @@
-<?
-
-    Class BootstrapException extends Exception { }
+<? Class BootstrapException extends Exception { }

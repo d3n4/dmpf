@@ -2,7 +2,8 @@
 Abstract Class ExceptionHandler {
     Protected Static Function ShowError($ErrorTitle, $ErrorDescription, $ErrorFile, $ErrorLine, $ErrorLines, $ErrorBackTrace, $SkipLine = 1)
     {
-        ob_clean();
+        @ob_end_clean();
+        // @ob_clean();
         $ErrorTitle = htmlspecialchars($ErrorTitle);
         $ErrorDescription = $ErrorDescription;
         $ErrorFile = htmlspecialchars($ErrorFile);
@@ -10,6 +11,7 @@ Abstract Class ExceptionHandler {
         /*ForEach($ErrorLines as $errLn => $ErrorCode)
             $ErrorLines[$errLn] = str_replace(array("\r", "\n", '<span', '</span>', '<?', '?>'), array('<p', '</p>', '', ''), highlight_string('<?'.$ErrorCode.'?>', true));*/
         //print_r($ErrorLines);
+        ob_start();
         ?>
     <!DOCTYPE html>
     <html>
@@ -155,7 +157,9 @@ Abstract Class ExceptionHandler {
         <h2>In <?=$ErrorFile?> at line <?=$ErrorLine?>.</h2>
         <div>
             <? $ln = 0; ForEach($ErrorLines as $Line=>$Code){ $ln++;
-            $Code = str_replace( array("\r", "\n", '&lt;?', '?&gt;', '<code>', '</code>'), '', highlight_string('<?'.$Code.'?>', true));
+            $Code = str_replace( array("\r", "\n", '&lt;?begin', 'end?&gt;', '<code>', '</code>'), '', highlight_string('<?begin'.$Code.'end?>', true));
+            $color = 'D00';
+            $Code = str_replace( array('&lt;?','?&gt;'), array('<span style="color: #'.$color.'">&lt;?</span>', '<span style="color: #'.$color.'">?&gt;</span>'), $Code );
             $iserrln = false;
             IF( $Line == $ErrorLine )
             {
@@ -171,15 +175,16 @@ Abstract Class ExceptionHandler {
             }
             ?>
             <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
-            <? } IF($ErrorBackTrace && sizeof($ErrorBackTrace)>1){ ?>
+            <? }
+            ForEach ($ErrorBackTrace as $i=>$entry)
+                IF($entry['function'] == 'SimulateError' or $entry['function'] == 'SimulateException') unset($ErrorBackTrace[$i]);
+            IF($ErrorBackTrace && sizeof($ErrorBackTrace)>0){ ?>
             <h2>Backtrace</h2>
             <div>
                 <?
                 $ecline = 1;
                 ForEach ($ErrorBackTrace as $entry) 
                 {
-                    IF($entry['function'] == 'SimulateError' or $entry['function'] == 'SimulateException') continue;
-
                     IF(isset($entry['class']))
                         $trace = $entry['class'].'::'.$entry['function'];
                     ELSE IF(isset($entry['function']))
@@ -228,7 +233,9 @@ Abstract Class ExceptionHandler {
     </body>
     </html>
         <?
-        exit;
+        $content = ob_get_contents();
+        ob_end_clean();
+        die($content);
     }
 
     Protected Static Function getArgument($arg)
@@ -341,4 +348,8 @@ Abstract Class ExceptionHandler {
 
         set_exception_handler( 'ExceptionHandler::SimulateException' );
     }
+}
+
+Function SecureExit(){
+    ExceptionHandler::SimulateError ('0', 'Security error', '.Kernel', 26);
 }

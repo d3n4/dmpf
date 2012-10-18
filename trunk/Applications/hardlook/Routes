@@ -2,7 +2,8 @@
 GET /data Data.Index
 
 # Users Controller
-* /azd Users.Index
+* /user/DENFER Users.Index
+GET /index2 Users.asdofjnoliwke
 POST /id([0-9]+) Users.Form
 GET /id([0-9]+) Users.Profile
 

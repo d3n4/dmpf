@@ -1,2 +1,1 @@
-<?
-    Class ReadOnlyPropertyException extends Exception { }
+<? Class ReadOnlyPropertyException extends Exception { }

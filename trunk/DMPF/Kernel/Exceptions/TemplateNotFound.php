@@ -1,0 +1,1 @@
+<? Class TemplateNotFound extends Exception { }

@@ -16,6 +16,8 @@
     Loader::index(ROOT);
     Loader::index(DMPF_PATH);
     Loader::index(KERNEL);
+    Loader::index(KERNEL.'/API');
+    Loader::index(KERNEL.'/ActionResult');
     Loader::index(KERNEL.'/Classes');
     Loader::index(KERNEL.'/Exceptions');
     Loader::index(KERNEL.'/Debug');
@@ -41,7 +43,7 @@
     ExceptionHandler::Initialize();
     
     IF(!isset($_GET['uri']))
-        ExceptionHandler::SimulateError ('0', 'Security error', 'Kernel', 0);
+        SecureExit();
     
     $Stopwatch = Stopwatch::Create('Framework');
     
