@@ -1,0 +1,1 @@
+Hello World render <?=$name?> your id is <?=$id?>

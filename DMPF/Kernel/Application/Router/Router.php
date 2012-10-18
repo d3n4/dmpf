@@ -102,8 +102,9 @@
             $ctrl = new $Controller[0]();
             $callback = Array( $ctrl, $Controller[1] );
             IF(is_callable($callback)){
-                call_user_func_array ($callback, $Arguments);
-                return true;
+                $ActionResult = call_user_func_array ($callback, $Arguments);
+                ob_clean();
+                return $ActionResult;
             }
             return false;
         }

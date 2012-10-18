@@ -1,2 +1,1 @@
-<?
-    Class RouteNotFoundException extends Exception { }
+<? Class RouteNotFoundException extends Exception { }
