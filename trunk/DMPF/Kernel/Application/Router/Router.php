@@ -4,11 +4,12 @@
      */
     Class Router Extends Properties {
         Public Static $Uri;
+        Public Static $Controller;
+        Public Static $ControllerName;
+        Public Static $Action;
         Protected $m_Routes;
         Public Function __construct() {
-            
-            $devConf = Config::Read('developer');
-            IF($devConf['autoRouter'])
+            IF(Config::Read('developer', 'autoRouter', false))
                 self::Generate();
             
             ForEach( (Array) file( ROUTES_FILE ) As $RouteString ){
@@ -30,7 +31,7 @@
                             ELSEIF($Method == '*')
                                 $Method = Route::ALL;
                             $Uri = $RouteArray[1];
-                            IF(!String::endWith('/', $Uri))
+                            IF(!String::endWith('/', $Uri) || strlen($Uri) == 1)
                                 String::Append ('/', $Uri);
                             IF(!String::startWith('/', $Uri))
                                 String::Prepend ('/', $Uri);
@@ -51,6 +52,7 @@
          * Generate routes file
          */
         Public Static Function Generate(){
+            Stopwatch::Create(__CLASS__.'::'.__FUNCTION__);
             $Routes = '';
             ForEach( (Array) glob(APPLICATION_DIR.'/Controllers/*.php') As $ControllerFile )
             {
@@ -62,6 +64,7 @@
                 IF(!isset($ControllerNames[1][0]))
                     return;
                 $ControllerName = $ControllerNames[1][0];
+                Loader::alias($ControllerName, $ControllerFile);
                 $ControllerRoutes = array();
                 preg_match_all('/#\s(GET|POST|\*)\s(.+)\s#\s(.*)Function ([a-zA-Z0-9\_]+)[\(]/Uis', $ControllerContent, $ControllerRoutes);
                 String::Append("# ".$ControllerName." Controller\r\n", $Routes);
@@ -103,7 +106,8 @@
             $callback = Array( $ctrl, $Controller[1] );
             IF(is_callable($callback)){
                 $ActionResult = call_user_func_array ($callback, $Arguments);
-                ob_clean();
+                IF(Config::Read('display', 'clean', false))
+                    ob_end_clean();
                 return $ActionResult;
             }
             return false;
@@ -114,7 +118,9 @@
          * @return bool Proceed result
          */
         Public Function Proceed(){
-            return $this->ProceedEx($_GET['uri']);
+            $uri = $_REQUEST['uri'];
+            unset($_REQUEST['uri']);
+            return $this->ProceedEx($uri);
         }
         
         /**
@@ -123,14 +129,22 @@
          * @return bool Proceed result
          */
         Public Function ProceedEx($uri){
-            $Route = $this->Find($uri);
+            Stopwatch::Create(__CLASS__.'::'.__FUNCTION__);
             self::$Uri = String::CutRight($uri, 1);
+            $Route = $this->Find($uri);
             IF($Route){
+                self::$Controller = $Route->getController();
+                self::$ControllerName = $Route->getControllerName();
+                self::$Action = $Route->getAction();
                 $arguments = array();
                 preg_match_all('|'.$Route->Uri.'|Uis', $uri, $arguments);
-                IF(isset($arguments[1]))
-                    $arguments = $arguments[1];
-                return $this->CallByRoute ($Route, $arguments);
+                $arguments_x = array();
+                $argId = 1;
+                $argCount = sizeof($arguments);
+                For($argId; $argId < $argCount; $argId++)
+                    IF(isset($arguments[$argId][0]))
+                        $arguments_x[] = $arguments[$argId][0];
+                return $this->CallByRoute ($Route, $arguments_x);
             }
             return false;
         }

@@ -28,6 +28,11 @@
               return False;
         }
         
+        /**
+         * preg_match_all to Array
+         * @param array $pma preg_match_all array
+         * @return array result
+         */
         Public Static Function pma2Array($pma) 
         { 
             $rt = Array();

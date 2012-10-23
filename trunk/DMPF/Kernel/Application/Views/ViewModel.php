@@ -1,12 +1,25 @@
 <?
+    /**
+     * Template ViewModel Class
+     */
     Abstract Class ViewModel implements ArrayAccess {
         Private $properties = Array();
         
+        /**
+         * Set viewmodel properties
+         * @param array $properties
+         * @return ViewModel self
+         */
         Public Function set( $properties ){
-            $this->properties = $properties;
+            IF(is_array($properties))
+                $this->properties = $properties;
             return $this;
         }
         
+        /**
+         * Get viewmodel properties 
+         * @return array
+         */
         Public Function get(){
             return $this->properties;
         }

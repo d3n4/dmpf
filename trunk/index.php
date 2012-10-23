@@ -18,6 +18,7 @@
     Loader::index(KERNEL);
     Loader::index(KERNEL.'/API');
     Loader::index(KERNEL.'/ActionResult');
+    Loader::index(KERNEL.'/ActionResult/Results');
     Loader::index(KERNEL.'/Classes');
     Loader::index(KERNEL.'/Exceptions');
     Loader::index(KERNEL.'/Debug');
@@ -34,18 +35,27 @@
     Loader::index(APPLICATION_DIR.'/Controllers');
     Loader::index(APPLICATION_DIR.'/Models');
     Loader::index(APPLICATION_DIR.'/Views');
+    Loader::index(APPLICATION_DIR.'/API');
     Loader::register();
     
     Storage::init();
-    
     Config::Load( APPLICATION_DIR.'/config.ini' );
-    
     ExceptionHandler::Initialize();
     
-    IF(!isset($_GET['uri']))
-        SecureExit();
+    IF(!isset($_REQUEST['uri']))
+        $_REQUEST['uri'] = '//';
     
-    $Stopwatch = Stopwatch::Create('Framework');
+    Stopwatch::Create('Framework');
+    
+    $Driver = null;
+    
+    $dbDriver = Config::Read('database', 'driver');
+    IF(class_exists($dbDriver, true)){
+        $Driver = new Driver(new $dbDriver);
+        $Driver->SetConnectData(Config::Read('database', 'host', 'localhost'), Config::Read('database', 'username', 'root'), Config::Read('database', 'password', 'root'), Config::Read('database', 'database', null));
+        IF($Driver)
+            Driver::Set($Driver);
+    }
     
     try
     {
@@ -55,7 +65,9 @@
         ExceptionHandler::SimulateException($e);
     }
     
+    IF($Driver)
+        IF($Driver->Connected())
+            $Driver->Disconnect ();
     
-    $devConf = Config::Read('developer');
-    IF($devConf['debug'])
-        $Stopwatch->Log();
+    IF(Config::Read('developer', 'log', false))
+        Stopwatch::Get('Framework')->Log();

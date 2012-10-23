@@ -2,8 +2,8 @@
 Abstract Class ExceptionHandler {
     Protected Static Function ShowError($ErrorTitle, $ErrorDescription, $ErrorFile, $ErrorLine, $ErrorLines, $ErrorBackTrace, $SkipLine = 1)
     {
-        @ob_end_clean();
-        // @ob_clean();
+        IF(ob_get_length() > 0)
+            ob_end_clean();
         $ErrorTitle = htmlspecialchars($ErrorTitle);
         $ErrorDescription = $ErrorDescription;
         $ErrorFile = htmlspecialchars($ErrorFile);
@@ -229,6 +229,14 @@ Abstract Class ExceptionHandler {
                 }
                 ?>
             </div>
+            <?$Stopwatches = Stopwatch::GetAll(); IF(sizeof($Stopwatches)>0){?>
+            <h2>Stopwatches</h2>
+            <div>
+                <?$time = 0; $Line = 0; ForEach( (Array)$Stopwatches  as $Name=>$Stopwatch ){$diff = $time; $time = $Stopwatch->Stop(); IF($diff > 0) $diff -= $time; ELSE $diff = ''; $iserrln = $Line == 0;?>
+                <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Name?> <b><?=$time?></b> <small style="color: gray;"><?=$diff?></small></span></pre>
+                <?$Line++;}?>
+            </div>
+            <?}?>
         </div>
     </body>
     </html>
@@ -268,8 +276,7 @@ Abstract Class ExceptionHandler {
 
     Public Static Function SimulateError($errno, $errstr, $errfile, $errline, $e = null, $SkipLine = 1)
     {
-        $devConf = Config::Read('developer');
-        IF(!$devConf['debug']) return true;
+        IF(!Config::Read('developer', 'throwExceptions', false)) return true;
         # IF(!(error_reporting() & $errno)) return true; #
 
          $errorType = array (
@@ -329,11 +336,10 @@ Abstract Class ExceptionHandler {
 
     Public Static Function SimulateException($Exception)
     {
-        $devConf = Config::Read('developer');
-        IF($devConf['beforeThrow'])
+        IF(Config::Read('developer', 'beforeThrow', false))
             ForEach($Exception->getTrace() As $SkipLine => $Trace)
                 IF(isset($Trace['file']) && isset($Trace['line']))
-                    IF(!in_array($Trace['function'], $devConf['skipFunctions']))
+                    IF(!in_array($Trace['function'], Config::Read('developer', 'skipFunctions', false)))
                         return self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Trace['file'], $Trace['line'], $Exception, $SkipLine + 1);
         
         self::SimulateError($Exception->getCode(), $Exception->getMessage(), $Exception->getFile(), $Exception->getLine(), $Exception);

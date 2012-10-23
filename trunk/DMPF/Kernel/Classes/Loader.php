@@ -6,6 +6,13 @@
 
     Abstract Class Loader
     {
+        
+        /**
+         * Count of loadded scripts
+         * @var int Count of loadded scripts
+         */
+        Protected Static $Count = 0;
+        
         /**
          * Indexes memory
          * @var array List of indexes
@@ -17,6 +24,14 @@
          * @var array List of aliasses
          */
         Protected Static $Alias = Array();
+        
+        /**
+         * Get count of loadded scripts
+         * @return int count
+         */
+        Public Static Function count(){
+            return self::$Count;
+        }
         
         /**
          * Create alias to include file by class name
@@ -58,14 +73,25 @@
          * @return bool Result
          */        
         Public Static Function load($Pattern){
-            IF(isset(self::$Alias[$Pattern]))
+            self::$Count++;
+            IF(isset(self::$Alias[$Pattern])){
+                IF(file_exists(self::$Alias[$Pattern])){
+                    require_once self::$Alias[$Pattern];
+                    return;
+                }
                 $Pattern = self::$Alias[$Pattern];
+            }
             ForEach( self::$Index As $Index => $Enabled  )
                 ForEach( glob($Index.'/'.$Pattern.'.php') As $File )
                     IF( file_exists($File) && $Enabled )
                         require_once $File;
         }
 
+        Public Static Function loadAll($Path){
+            ForEach( (Array) glob($Path . '/*.php') As $File )
+                require_once $File;
+        }
+        
         /**
          * Initialize loader
          */
