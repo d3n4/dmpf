@@ -14,11 +14,29 @@
             self::$Watches[$Name] = $this;
         }
         
+        Public Function getName(){
+            return $this->m_Name;
+        }
+        
+        Public Function getElapsed(){
+            return $this->Elapsed;
+        }
+        
         Public Static Function Create($Name, $AutoStart = true){
             $Stopwatch = new Stopwatch($Name);
             IF($AutoStart)
                 $Stopwatch->Start();
             return $Stopwatch;
+        }
+        
+        Public Static Function GetAll(){
+            return self::$Watches;
+        }
+        
+        Public Static Function Get($Name){
+            IF(isset(self::$Watches[$Name]))
+                return self::$Watches[$Name];
+            return null;
         }
         
         Public Function Start(){
@@ -34,7 +52,6 @@
         }
         
         Public Function Log(){
-            $this->Stop();
-            ?><script>console.log('<?=$this->m_Name?> Stopwatch <?=$this->Elapsed?>');</script><?
+            ?><script>console.log('<?=$this->m_Name?> Stopwatch <?=$this->Stop()?>');</script><?
         }
     }

@@ -20,7 +20,7 @@
 
 		<div id="container">
 			<div id="content">
-				Hello user <?=$this->Id?>
+				Hello user <?=$this->id?>
 			</div><!-- #content-->
 		</div><!-- #container-->
 
@@ -39,3 +39,6 @@
 </html>
 
 <?=View::Render('demo.php', $self)?>
+<?foreach($self as $k=>$i){?>
+var <?=$k?> = <?=$i."<br>\r\n"?>
+<?}?>

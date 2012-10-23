@@ -1,0 +1,1 @@
+<? Class TemplateCompilationErrorException extends Exception { }

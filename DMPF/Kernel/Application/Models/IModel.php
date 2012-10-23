@@ -1,16 +1,7 @@
-<?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author DENFER
- */
-interface IModel {
-    //put your code here
-}
-
-?>
+<?
+    /**
+     * Database entry model
+     */
+    Interface IModel {
+        Public Function getId();
+    }

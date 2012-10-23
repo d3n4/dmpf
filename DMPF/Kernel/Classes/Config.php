@@ -11,11 +11,15 @@
         
         /**
          * Read section variables
-         * @param string $Key Section key
-         * @return stdClass Variables
+         * @param string $Section Section
+         * @param string $Key Key
+         * @return mixed Value
          */
-        Public Static Function Read($Key){
-            return self::$Memory[$Key];
+        Public Static Function Read($Section, $Key, $defaultValue = null){
+            IF(isset(self::$Memory[$Section]))
+                IF(isset(self::$Memory[$Section][$Key]))
+                    return self::$Memory[$Section][$Key];
+            return $defaultValue;
         }
         
         Public Static Function ReadObject($Key){

@@ -1,4 +1,7 @@
 <?
+    /**
+     * Result from controller action
+     */
     Class ActionResult extends Properties implements IActionResult {
         Protected $m_Result;
         Protected $m_Type;
@@ -15,10 +18,11 @@
                 return $this->m_Result;
             ELSE IF( $this->m_Type == 'array' )
                 return implode('', $this->m_Result);
-            ELSE IF( $this->m_Type == 'object' )
-            {
-                IF($this->m_Class == 'View')
-                    return $this->m_Result->Compile();
+            ELSE IF( $this->m_Type == 'object' ){
+                $Reflection = new ReflectionClass($this->m_Result);
+                IF($Reflection->implementsInterface('IActionResult'))
+                    return $this->m_Result->getResult();
             }
+            return null;
         }
     }

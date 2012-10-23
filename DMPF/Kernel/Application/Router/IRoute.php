@@ -1,4 +1,7 @@
 <?
+    /**
+     * Router interface
+     */
     Interface IRoute {
         Public Function getMethod();
         Public Function getUri();
