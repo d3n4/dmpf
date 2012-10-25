@@ -51,7 +51,7 @@
     
     $dbDriver = Config::Read('database', 'driver');
     IF(class_exists($dbDriver, true)){
-        $Driver = new Driver(new $dbDriver);
+        $Driver = new $dbDriver;
         $Driver->SetConnectData(Config::Read('database', 'host', 'localhost'), Config::Read('database', 'username', 'root'), Config::Read('database', 'password', 'root'), Config::Read('database', 'database', null));
         IF($Driver)
             Driver::Set($Driver);
