@@ -33,37 +33,44 @@
         
         /**
          * Insert object into table
-         * @param object|array $Object Object to serialize
          * @param string $Table table name
+         * @param object|array $Object Object to serialize
          */
-        Public Function Insert( $Object, $Table );
+        Public Function Insert( $Table, $Object );
         
         /**
          * Select entry from table
-         * @param object|array $Query
          * @param string $Table table name
+         * @param object|array $Query
          * @return mixed result
          */
-        Public Function Select( $Query, $Table );
+        Public Function Select( $Table, IQuery $Query );
         
         /**
          * Delete entry from table
-         * @param object|array $Query
          * @param string $Table table name
+         * @param object|array $Query
          */
-        Public Function Delete( $Query, $Table );
+        Public Function Delete( $Table, IQuery $Query );
         
         /**
          * Update entry in table
+         * @param string $Table table name
          * @param object|array $Object
          * @param object|array $Query
-         * @param string $Table table name
          */
-        Public Function Update( $Object, $Query, $Table );
+        Public Function Update( $Table, $Object, IQuery $Query );
         
         /**
          * Truncate table
          * @param string $Table table name
          */
         Public Function Truncate( $Table );
+        
+        /**
+         * Get count of items in table
+         * @param string $Table table name
+         * @return integer Count
+         */
+        Public Function Count( $Table );
     }

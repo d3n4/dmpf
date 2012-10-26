@@ -65,23 +65,27 @@
            return $this->Driver->Disconnect();
         }
         
-        Public Function Insert( $Object, $Table ){
-            return $this->Driver->Insert($Object, $Table);
+        Public Function Insert( $Table, $Object ){
+            return $this->Driver->Insert($Table, $Object);
         }
         
-        Public Function Select( $Query, $Table ){
-            return $this->Driver->Select($Query, $Table);
+        Public Function Select( $Table, IQuery $Query ){
+            return $this->Driver->Select($Table, $Query);
         }
         
-        Public Function Delete( $Query, $Table ){
-            return $this->Driver->Delete($Query, $Table);
+        Public Function Delete( $Table, IQuery $Query ){
+            return $this->Driver->Delete($Table, $Query);
         }
         
-        Public Function Update( $Object, $Query, $Table ){
-            return $this->Driver->Update($Object, $Query, $Table);
+        Public Function Update( $Table, $Object, IQuery $Query ){
+            return $this->Driver->Update($Table, $Object, $Query);
         }
         
         Public Function Truncate( $Table ){
             return $this->Driver->Truncate($Table);
+        }
+        
+        Public Function Count( $Table ){
+            return $this->Driver->Count($Table);
         }
     }

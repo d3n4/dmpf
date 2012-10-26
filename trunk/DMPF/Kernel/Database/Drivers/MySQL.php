@@ -7,6 +7,8 @@
         
         Protected $m_Connected = false, $Link, $Host, $Username, $Password, $Database;
         
+        Protected Static $m_CountInstance = null;
+        
         Protected Function Format(){
             $args = func_get_args();
             $i = 1;
@@ -20,33 +22,83 @@
             return mysql_real_escape_string($string, $this->Link);
         }
         
-        Protected Function getQuery( $InputFormat, $Query, $Table ){
-            $What = isset($Query['What']) ? $Query['What'] : '*';
-            $Where = isset($Query['Where']) ? $Query['Where'] : null;
-            $One = isset($Query['One']) ? $Query['One'] : false;
-            IF($One)
-                $Query['Limit'] = 1;
-            $Limit = isset($Query['Limit']) ? $Query['Limit'] : false;
-            $Offset = isset($Query['Offset']) ? $Query['Offset'] : false;
+        Protected Function getQuery( $InputFormat, IQuery $Query, $Table ){
+            IF($Query->getOne())
+                $Query->setLimit (1);
             
-            IF(is_array($What)) $What = implode('`,`', $What);
-            IF($What != '*') $What = '`'.$What.'`';
+            $Fields = $Query->getFields();
             
-            $Format = $this->Format($InputFormat, $What, $Table);
+            IF(!$Fields)
+                $Fields = '*';
             
-            IF($Where){
-                $WhereKey = isset($Query['Where']['Key']) ? $Query['Where']['Key'] : null;
-                $WhereOperator = isset($Query['Where']['Operator']) ? $Query['Where']['Operator'] : '=';
-                $WhereValue = isset($Query['Where']['Value']) ? $Query['Where']['Value'] : null;
-                IF($WhereKey !== null)
-                    String::Append ( String::Format(' WHERE `{0}` {1} \'{2}\'', $this->Escape($WhereKey), $WhereOperator, $this->Escape($WhereValue)), $Format );
+            IF(is_array($Fields)) $Fields = implode('`, `', $Fields);
+            IF($Fields != '*' && strpos('(', $Fields) < 0) $Fields = '`'.$Fields.'`';
+            
+            $Format = str_replace( Array('{table}', '{fields}'), Array('`'.$this->Escape($Table).'`', $Fields), $InputFormat );
+
+            IF($Query->getObject()){
+                $Object = $Query->getObject();
+                $Keys = '';
+                $Values = '';
+                ForEach( (Object) $Object As $Key => $Value ){
+                    IF(is_numeric($Key)) continue;
+                    IF( strlen($Keys) > 0 )
+                        $Keys .= ', ';
+                    $Keys .= '`'.$Key.'`';
+                    
+                    IF( strlen($Values) > 0 )
+                        $Values .= ', ';
+                    
+                    Switch(gettype($Value)){
+                        case 'string':
+                            $Values .= '\''.$Value.'\'';
+                            break;
+                        
+                        case 'boolean':
+                            $Values .= $Value ? 'true' : 'false';
+                            break;
+                        
+                        case 'double':
+                        case 'integer':
+                            $Values .= $Value;
+                            break;
+                        
+                        case 'NULL':
+                            $Values .= 'NULL';
+                            break;
+                        
+                        case 'object':
+                        case 'array':
+                            $Values .= json_encode($Value);
+                            break;
+                    }
+                }
+        
+                
+                $Format .= ' ( '.$Keys.' ) VALUES ( '.$Values.' )';
             }
             
-            IF($Limit !== false)
-                String::Append( String::Format(' LIMIT {0}', $Limit), $Format );
+            $Conditions = $Query->getConditions();
             
-            IF($Offset !== false)
-                String::Append( String::Format(' OFFSET {0}', $Offset), $Format );
+            IF(!is_array($Conditions) && ( is_subclass_of($Conditions, 'Condition') || get_class($Conditions) == 'Condition' ))
+                $Conditions = Array($Conditions);
+            
+            IF(sizeof($Conditions) > 0){
+                $Conditions_String = '';
+                /* @var $Condition ICondition */
+                ForEach ( (Array) $Conditions As $i => $Condition ){
+                    IF($i > 0)
+                        $Conditions_String .= ' '.$Condition->getType().' ';
+                    $Conditions_String .= String::Format('`{0}` {1} \'{2}\'', $Condition->getKey(), $Condition->getOperator(), $this->Escape($Condition->getValue()));
+                }
+                $Format .= ' WHERE '.$Conditions_String;
+            }
+            
+            IF($Query->getLimit() != null)
+                $Format .= ' LIMIT '. $Query->getLimit();
+            
+            IF($Query->getOffset() != null)
+                $Format .= ' OFFSET '. $Query->getOffset();
             
             return $Format;
         }
@@ -77,18 +129,17 @@
             return $this->m_Connected;
         }
         
-        Public Function Insert( $Object, $Table ){
-            
+        Public Function Insert( $Table, $Object ){
+            return mysql_query( $this->getQuery('INSERT INTO {table}', Query::Object($Object), $Table) );
         }
         
-        Public Function Select( $Query, $Table ){
-            
-            $Format = $this->getQuery('SELECT {0} FROM {1}', $Query, $Table);
-            
+        Public Function Select( $Table, IQuery $Query ){
+            $mysql_query = mysql_query( $this->getQuery('SELECT {fields} FROM {table}', $Query, $Table) );
+            IF(!$mysql_query)
+                return null;
             $Result = Array();
-            $mysql_query = mysql_query($Format);
             While($row = mysql_fetch_array($mysql_query, MYSQL_ASSOC))
-                IF($One)
+                IF($Query->getOne())
                     return $row;
                 ELSE
                     $Result[] = $row;
@@ -96,15 +147,22 @@
             return $Result;
         }
         
-        Public Function Delete( $Query, $Table ){
-            
+        Public Function Delete( $Table, IQuery $Query ){
+            return mysql_query( $this->getQuery('DELETE FROM {table}', $Query, $Table) );
         }
         
-        Public Function Update( $Object, $Query, $Table ){
+        Public Function Update( $Table, $Object, IQuery $Query ){
             
         }
         
         Public Function Truncate( $Table ){
-            
+            return mysql_query('TRUNCATE TABLE `'.$this->Escape($Table).'`');
+        }
+        
+        Public Function Count( $Table ){
+            IF(!self::$m_CountInstance)
+                self::$m_CountInstance = Query::Instance()->setFields('COUNT(1)')->setOne(true);
+            $Count = $this->Select($Table, self::$m_CountInstance);
+            return $Count['COUNT(1)'];
         }
     }
