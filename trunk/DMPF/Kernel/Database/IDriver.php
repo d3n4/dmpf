@@ -44,7 +44,15 @@
          * @param object|array $Query
          * @return mixed result
          */
-        Public Function Select( $Table, IQuery $Query );
+        Public Function Select( $Table, IQuery $Query, $Type = 'Model' );
+        
+        /**
+         * Find entry in table
+         * @param string $Table table name
+         * @param object|array $Query
+         * @return mixed result
+         */
+        Public Function Find( $Table, IQuery $Query, $Type = 'Model' );
         
         /**
          * Delete entry from table

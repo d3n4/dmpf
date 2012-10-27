@@ -69,8 +69,12 @@
             return $this->Driver->Insert($Table, $Object);
         }
         
-        Public Function Select( $Table, IQuery $Query ){
-            return $this->Driver->Select($Table, $Query);
+        Public Function Select( $Table, IQuery $Query, $Type = 'Model' ){
+            return $this->Driver->Find($Table, $Query, $Type);
+        }
+        
+        Public Function Find( $Table, IQuery $Query, $Type = 'Model' ){
+            return $this->Driver->Find($Table, $Query, $Type);
         }
         
         Public Function Delete( $Table, IQuery $Query ){

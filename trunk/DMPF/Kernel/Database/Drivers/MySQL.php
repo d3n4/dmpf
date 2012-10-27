@@ -133,18 +133,30 @@
             return mysql_query( $this->getQuery('INSERT INTO {table}', Query::Object($Object), $Table) );
         }
         
-        Public Function Select( $Table, IQuery $Query ){
+        Public Function Find( $Table, IQuery $Query, $Type = 'Model' ){
             $mysql_query = mysql_query( $this->getQuery('SELECT {fields} FROM {table}', $Query, $Table) );
             IF(!$mysql_query)
                 return null;
             $Result = Array();
-            While($row = mysql_fetch_array($mysql_query, MYSQL_ASSOC))
-                IF($Query->getOne())
-                    return $row;
+            While($Item = mysql_fetch_array($mysql_query, MYSQL_ASSOC)){
+                IF(class_exists($Type, true))
+                {
+                    $Model = new $Type();
+                    $Item = $Model->Assign($Item);
+                }
                 ELSE
-                    $Result[] = $row;
+                    $Item = Model::Instance()->Assign($Item);
+                IF($Query->getOne())
+                    return $Item;
+                ELSE
+                    $Result[] = $Item;
+            }
             mysql_free_result($mysql_query);
             return $Result;
+        }
+        
+        Public Function Select( $Table, IQuery $Query, $Type = 'Model' ){
+            return $this->Find($Table, $Query, $Type);
         }
         
         Public Function Delete( $Table, IQuery $Query ){
@@ -163,6 +175,6 @@
             IF(!self::$m_CountInstance)
                 self::$m_CountInstance = Query::Instance()->setFields('COUNT(1)')->setOne(true);
             $Count = $this->Select($Table, self::$m_CountInstance);
-            return $Count['COUNT(1)'];
+            return $Count->{'COUNT(1)'};
         }
     }

@@ -3,19 +3,22 @@
         
         Protected Static $m_Collections = Array();
         Protected $m_Colleciton;
+        Protected $m_Type;
         
-        Public Function __construct($Collection) {
+        Public Function __construct($Collection, $Type = 'Model') {
             $this->m_Colleciton = $Collection;
+            $this->m_Type = $Type;
         }
         
         /**
          * Get collection by name
          * @param ICollection $Collection collection name
+         * @return ICollection
          */
-        Public Static Function Get($Collection){
+        Public Static Function Get($Collection, $Type = 'Model'){
             IF(isset(self::$m_Collections[$Collection]))
                 return self::$m_Collections[$Collection];
-            self::$m_Collections[$Collection] = new Collection($Collection);
+            self::$m_Collections[$Collection] = new Collection($Collection, $Type);
             return self::$m_Collections[$Collection];
         }
         
@@ -31,10 +34,19 @@
         /**
          * Select object from collection
          * @param IQuery $Query
-         * @return array|IModel Result
+         * @return Model[] Result
          */
         Public Function Select(IQuery $Query) {
-            return Driver::Get()->Select($this->m_Colleciton, $Query);
+            return Driver::Get()->Select($this->m_Colleciton, $Query, $this->m_Type);
+        }
+        
+        /**
+         * Find object from collection
+         * @param IQuery $Query
+         * @return Model[] Result
+         */
+        Public Function Find(IQuery $Query) {
+            return Driver::Get()->Select($this->m_Colleciton, $Query, $this->m_Type);
         }
         
         /**

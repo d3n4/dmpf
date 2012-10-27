@@ -1,5 +1,5 @@
 <?
     Class User extends Model {
-        Public $login;
-        Public $password;
+        Public $login = '';
+        Public $password = '';
     }
