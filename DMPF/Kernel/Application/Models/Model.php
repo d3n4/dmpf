@@ -1,5 +1,5 @@
 <?
-    Class Model Implements IModel {
+    Class Model extends Properties implements IModel {
         
         Public $id = 0;
         
@@ -17,17 +17,6 @@
         
         Public Function Set($Key, $Value){
             $this->{$Key} = $Value;
-            return $this;
-        }
-        
-        Public Function Assign($Object){
-            $self = get_class($this) == __CLASS__;
-            ForEach( (Object) $Object As $Key => $Value )
-                IF($self)
-                    $this->{$Key} = $Value;
-                ELSE
-                    IF( isset($this->{$Key}) )
-                        $this->{$Key} = $Value;
             return $this;
         }
     }

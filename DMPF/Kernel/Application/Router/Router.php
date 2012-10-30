@@ -130,7 +130,7 @@
          */
         Public Function ProceedEx($uri){
             Stopwatch::Create(__CLASS__.'::'.__FUNCTION__);
-            self::$Uri = String::CutRight($uri, 1);
+            self::$Uri = '/'.$uri;//String::CutRight($uri, 1);
             $Route = $this->Find($uri);
             IF($Route){
                 self::$Controller = $Route->getController();
@@ -165,6 +165,9 @@
          * @return Route|null Route
          */
         Public Function FindEx($Uri, $Method){
+            //IF(String::endWith('/', $Uri))
+                //$Uri = String::CutRight ($Uri, 1);
+            $Uri = '[/'.$Uri.'/]';
             IF(!String::endWith('/', $Uri))
                 String::Append ('/', $Uri);
             IF(!String::startWith('/', $Uri))
@@ -172,7 +175,7 @@
             ForEach( (Array) $this->m_Routes As $Route )
                 IF( $Route->Method == $Method || $Route->Method == Route::ALL ){
                     $arguments = array();
-                    preg_match_all('|'.$Route->Uri.'|Uis', $Uri, $arguments);
+                    preg_match_all('|\['.$Route->Uri.'\]|Uis', $Uri, $arguments);
                     IF(isset($arguments[0]))
                         IF(isset($arguments[0][0]))
                             return $Route;

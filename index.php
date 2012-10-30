@@ -11,6 +11,12 @@
     define('APPLICATIONS', ROOT.'/Applications');
     define('APPLICATION_DIR', APPLICATIONS.'/'.APPLICATION);
     define('ROUTES_FILE', APPLICATIONS.'/'.APPLICATION.'/Routes');
+    
+    IF(isset($_REQUEST['asset'])){
+        require_once KERNEL.'/Classes/Assets.php';
+        Assets::Get ($_REQUEST['asset']);
+    }
+    
     require_once KERNEL.'/Classes/Loader.php';
     
     Loader::index(ROOT);
@@ -32,6 +38,7 @@
     Loader::index(KERNEL.'/Application/Router');
     Loader::index(APPLICATIONS);
     Loader::index(APPLICATION_DIR);
+    Loader::index(APPLICATION_DIR.'/Core');
     Loader::index(APPLICATION_DIR.'/Controllers');
     Loader::index(APPLICATION_DIR.'/Models');
     Loader::index(APPLICATION_DIR.'/Views');
@@ -39,7 +46,7 @@
     Loader::register();
     
     Storage::init();
-    Config::Load( APPLICATION_DIR.'/config.ini' );
+    Config::Load( APPLICATION_DIR.'/Core/config.ini' );
     ExceptionHandler::Initialize();
     
     IF(!isset($_REQUEST['uri']))
@@ -52,7 +59,10 @@
     $dbDriver = Config::Read('database', 'driver');
     IF(class_exists($dbDriver, true)){
         $Driver = new $dbDriver;
-        $Driver->SetConnectData(Config::Read('database', 'host', 'localhost'), Config::Read('database', 'username', 'root'), Config::Read('database', 'password', 'root'), Config::Read('database', 'database', null));
+        $Driver->SetConnectData(Config::Read('database', 'host', 'localhost'),
+                                Config::Read('database', 'username', 'root'), 
+                                Config::Read('database', 'password', 'root'), 
+                                Config::Read('database', 'database', 'db'));
         IF($Driver)
             Driver::Set($Driver);
     }

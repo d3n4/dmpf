@@ -1,3 +1,4 @@
 RewriteEngine on 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php?uri=/$1/ [L,QSA]
+RewriteRule ^assets/(.*)$ index.php?asset=$1&uri=assets/$1 [L,QSA]
+RewriteRule ^(.*)$ index.php?uri=$1 [L,QSA]
