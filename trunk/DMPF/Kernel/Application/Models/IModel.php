@@ -4,13 +4,6 @@
      */
     Interface IModel {
         /**
-         * Assign properties from object/array
-         * @param array|object $Object
-         * @return IModel self
-         */
-        Public Function Assign($Object);
-        
-        /**
          * Get value of model by key
          * @param string $Key
          * @return mixed Value

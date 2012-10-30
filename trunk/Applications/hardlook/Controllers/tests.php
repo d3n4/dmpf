@@ -14,7 +14,11 @@
             $user->password = 'test';
             $users->Insert($user);
             
-            $response .= json_encode( $users->Find(Query::None()) );
+            $userslist = $users->Find(Query::None());
+            /* @var User[] $userlist */
+            $userslist[0] -> id = 2;
+            
+            $response .= json_encode( $userslist );
             
             return new ActionResult($response);
             
