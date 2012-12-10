@@ -66,7 +66,7 @@
                 $ControllerName = $ControllerNames[1][0];
                 Loader::alias($ControllerName, $ControllerFile);
                 $ControllerRoutes = array();
-                preg_match_all('/#\s(GET|POST|\*)\s(.+)\s#\s(.*)Function ([a-zA-Z0-9\_]+)[\(]/Uis', $ControllerContent, $ControllerRoutes);
+                preg_match_all('/#(\s|)(GET|POST|\*)\s(.+)\s(.*)Function ([a-zA-Z0-9\_]+)[\(]/Uis', $ControllerContent, $ControllerRoutes);
                 String::Append("# ".$ControllerName." Controller\r\n", $Routes);
                 ForEach( (Array) Converter::pma2Array($ControllerRoutes) As $Route )
                     IF(sizeof($Route) > 0)
@@ -137,7 +137,7 @@
                 self::$ControllerName = $Route->getControllerName();
                 self::$Action = $Route->getAction();
                 $arguments = array();
-                preg_match_all('|'.$Route->Uri.'|Uis', $uri, $arguments);
+                preg_match_all('|'.$Route->Uri.'|Uis', self::$Uri.'/', $arguments);
                 $arguments_x = array();
                 $argId = 1;
                 $argCount = sizeof($arguments);

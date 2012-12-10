@@ -10,7 +10,7 @@
     define('KERNEL', DMPF_PATH.'/Kernel');
     define('APPLICATIONS', ROOT.'/Applications');
     define('APPLICATION_DIR', APPLICATIONS.'/'.APPLICATION);
-    define('ROUTES_FILE', APPLICATIONS.'/'.APPLICATION.'/Routes');
+    define('ROUTES_FILE', APPLICATIONS.'/'.APPLICATION.'/Core/Routes');
     
     IF(isset($_REQUEST['asset'])){
         require_once KERNEL.'/Classes/Assets.php';

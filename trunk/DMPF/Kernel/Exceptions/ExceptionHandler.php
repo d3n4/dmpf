@@ -176,6 +176,12 @@ Abstract Class ExceptionHandler {
             ?>
             <pre<? IF($iserrln){ ?> class="error" <? } ?>><span class="line"><?=$Line?></span><span class="code<?IF($iserrln){?> errorline<?}?>"><?=$Code?></span></pre>
             <? }
+
+            Function RenameFunction($function){
+                $_externalCall = '<span style="color:#d00005;"><b>[ External call ]</b></span>';
+                return str_replace( array("call_user_func_array", "call_user_func"), array($_externalCall,$_externalCall), $function );
+            }
+
             ForEach ($ErrorBackTrace as $i=>$entry)
                 IF($entry['function'] == 'SimulateError' or $entry['function'] == 'SimulateException') unset($ErrorBackTrace[$i]);
             IF($ErrorBackTrace && sizeof($ErrorBackTrace)>0){ ?>
@@ -190,25 +196,39 @@ Abstract Class ExceptionHandler {
                     ELSE IF(isset($entry['function']))
                         $trace =  $entry['function'];
 
-                    $trace .= " (";
+                    if($entry['function'] == "call_user_func" or $entry['function'] == "call_user_func_array"){
+                        /*
+                        $args = $entry['args'];
+                        if(isset($args[0][0]))
+                            if(is_object($args[0][0]))
+                                $trace = get_class($args[0][0]);
+                            else
+                                $trace = $args[0][0];
+                        if(isset($args[0][1]))
+                            $trace .= '::'.$args[0][1];
+                        */
+                        continue;
+                    } else {
+                        $trace .= " (";
 
-                    $fargs = '';
+                        $fargs = '';
 
-                    IF(sizeof($entry['args'])>0)
-                    {
-                        $fargs .= ' ';
-                        ForEach((array)$entry['args'] as $argId=>$arg)
+                        IF(sizeof($entry['args'])>0)
                         {
-                            $fargs .= self::getArgument ($arg);
-                            IF( $argId < sizeof($entry['args'])-1 )
-                                $fargs .= ', ';
+                            $fargs .= ' ';
+                            ForEach((array)$entry['args'] as $argId=>$arg)
+                            {
+                                $fargs .= self::getArgument ($arg);
+                                IF( $argId < sizeof($entry['args'])-1 )
+                                    $fargs .= ', ';
+                            }
+                            $fargs .= ' ';
                         }
-                        $fargs .= ' ';
+
+                        $trace .= $fargs.')';
                     }
 
-                    $trace .= $fargs;
-
-                    $trace .= ')<small style="color: gray;"> ';
+                    $trace .= '<small style="color: gray;"> ';
                     IF(isset($entry['file']))
                         $trace .= $entry['file'];
                     ELSE
