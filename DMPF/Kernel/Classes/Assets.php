@@ -997,7 +997,7 @@
         
         Public Static Function Get($Asset){
             $AssetPath = APPLICATION_DIR.'/Assets/'.$Asset;
-            IF(file_exists($AssetPath)){
+            IF(file_exists($AssetPath) && is_file($AssetPath)){
                 $Type = self::get_mime_type($AssetPath);
                 header('Content-type: '.$Type);
                 readfile($AssetPath);

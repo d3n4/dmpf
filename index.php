@@ -4,13 +4,17 @@
     error_reporting(E_ALL);
     
     define('APPLICATION', 'hardlook');
-    
+
+    define('LOCALE', 'UA');
+
     define('ROOT', str_replace('\\','/', dirname(__FILE__)));
     define('DMPF_PATH', ROOT.'/DMPF');
     define('KERNEL', DMPF_PATH.'/Kernel');
     define('APPLICATIONS', ROOT.'/Applications');
     define('APPLICATION_DIR', APPLICATIONS.'/'.APPLICATION);
     define('ROUTES_FILE', APPLICATIONS.'/'.APPLICATION.'/Core/Routes');
+
+    define('HOME', '/DMPF');
     
     IF(isset($_REQUEST['asset'])){
         require_once KERNEL.'/Classes/Assets.php';
@@ -36,6 +40,7 @@
     Loader::index(KERNEL.'/Application/Models');
     Loader::index(KERNEL.'/Application/Views');
     Loader::index(KERNEL.'/Application/Router');
+    Loader::index(KERNEL.'/Application/Locale');
     Loader::index(APPLICATIONS);
     Loader::index(APPLICATION_DIR);
     Loader::index(APPLICATION_DIR.'/Core');
@@ -66,9 +71,10 @@
         IF($Driver)
             Driver::Set($Driver);
     }
-    
+
     try
     {
+        Localization::Initialize(LOCALE);
         IF(!Bootstrap::Boot())
             throw new BootstrapException('Failed to boot up framework');
     } catch (Exception $e) {

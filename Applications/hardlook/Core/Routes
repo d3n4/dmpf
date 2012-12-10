@@ -1,0 +1,14 @@
+# API_Controller Controller
+* /api/([a-zA-Z0-9_]+).([a-zA-Z0-9_]+) API_Controller.invoke
+
+# MainController Controller
+GET / MainController.Index
+
+# Users Controller
+GET /register Users.RegisterForm
+POST /register Users.Register
+GET /id([0-9]+) Users.Profile
+
+# tests Controller
+GET /test/model tests.Index
+

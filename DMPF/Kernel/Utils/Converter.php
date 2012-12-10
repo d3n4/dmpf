@@ -8,24 +8,45 @@
         /**
          * Convert Array to Object
          * @param Array $array
-         * @return \stdClass|boolean Convertion result
+         * @return \stdClass|null result
          */
         Public Static Function ArrayToObject($array)
         {
             IF(!is_array($array))
                 return $array;
             $object = new stdClass();
-            IF (is_array($array) && count($array) > 0) {
+            IF (is_array($array) && sizeof($array) > 0) {
               ForEach ($array As $name=>$value) {
-                 $name = strtolower(trim($name));
-                 if (!empty($name)) {
-                    $object->$name = Converter::ArrayToObject($value);
-                 }
+                 $name = trim($name);
+                 if (!empty($name))
+                    $object->{$name} = Converter::ArrayToObject($value);
               }
               return $object; 
             }
             ELSE
-              return False;
+              return null;
+        }
+
+        /**
+         * Convert Object to Array
+         * @param Object $object
+         * @return \Array|null result
+         */
+        Public Static Function ObjectToArray($object)
+        {
+            IF(!is_object($object))
+                return $object;
+            $object = Array();
+            IF (is_object($object) && sizeof($object) > 0) {
+                ForEach ($object As $name=>$value) {
+                    $name = trim($name);
+                    if (!empty($name))
+                        $object[$name] = Converter::ObjectToArray($value);
+                }
+                return $object;
+            }
+            ELSE
+                return null;
         }
         
         /**

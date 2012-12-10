@@ -76,7 +76,7 @@
         /**
          * Load template
          * @param string $template template name
-         * @throws TemplateNotFound
+         * @throws TemplateNotFoundException
          */
         Public Function Load($template){
             Stopwatch::Create(__CLASS__.'::'.__FUNCTION__);
@@ -85,7 +85,7 @@
             $this->m_Template = $template;
             $this->m_Filename = APPLICATION_DIR . '/Views/' . $this->m_Template;
             IF(!file_exists($this->m_Filename))
-                throw new TemplateNotFound('View template "'.$this->m_Template.'" not found.');
+                throw new TemplateNotFoundException('View template "'.$this->m_Template.'" not found.');
         }
         
         /**
