@@ -14,7 +14,7 @@
                 echo $ResultString;
                 return true;
             }
-            ELSE IF( $ActionResult === false ) throw new RouteNotFoundException('Route for url "'.Router::$Uri.'" not found.');
+            ELSE IF( $ActionResult === false ) throw new RouteNotFoundException('Route for url '.Router::$Uri.' not found.');
             ELSE
                 throw new ActionResultException('Controller action '. Router::$Controller . ' not return ActionResult.');
         }

@@ -2,7 +2,6 @@
     Class tests {
         # GET /test/model #
         Public Function Index(){
-            # Инициализируем переменную ответа
             $response = '';
             $Driver = Driver::Get();
             $response .= 'Connecting... ';
