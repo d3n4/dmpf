@@ -10,5 +10,5 @@ POST /register Users.Register
 GET /id([0-9]+) Users.Profile
 
 # tests Controller
-GET /test/model tests.Index
+GET /test tests.Index
 

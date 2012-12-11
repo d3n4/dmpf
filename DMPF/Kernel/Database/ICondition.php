@@ -18,10 +18,4 @@
          * @return string Value
          */
         Public Function getValue();
-        
-        /**
-         * Get type of condition
-         * @return string Type
-         */
-        Public Function getType();
     }

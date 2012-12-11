@@ -21,11 +21,30 @@
         Protected Function Escape($string){
             return mysql_real_escape_string($string, $this->Link);
         }
-        
+
+        Protected Static Function getValue($Value){
+            Switch(gettype($Value)){
+                case 'string':
+                    return '\''.addslashes($Value).'\'';
+                case 'boolean':
+                    return $Value ? 'true' : 'false';
+                case 'float':
+                case 'double':
+                case 'integer':
+                    return $Value;
+                case 'object':
+                case 'array':
+                    return "'".json_encode($Value)."'";
+                case 'NULL':
+                default:
+                    return 'NULL';
+            }
+        }
+
         Protected Function getQuery( $InputFormat, IQuery $Query, $Table ){
             IF($Query->getOne())
                 $Query->setLimit (1);
-            
+
             $Fields = $Query->getFields();
             
             IF(!$Fields)
@@ -35,6 +54,17 @@
             IF($Fields != '*' && strpos('(', $Fields) < 0) $Fields = '`'.$Fields.'`';
             
             $Format = str_replace( Array('{table}', '{fields}'), Array('`'.$this->Escape($Table).'`', $Fields), $InputFormat );
+
+            IF($Query->getUpdateObject()){
+                $Object = $Query->getUpdateObject();
+                $UpdateFormat = ' SET ';
+                ForEach( (Object) $Object As $Key => $Value ){
+                    IF(strlen($UpdateFormat) > 5)
+                        $UpdateFormat .= ', ';
+                    $UpdateFormat .= '`'.$Key.'` = '.self::getValue($Value);
+                }
+                $Format .= $UpdateFormat;
+            }
 
             IF($Query->getObject()){
                 $Object = $Query->getObject();
@@ -48,47 +78,24 @@
                     
                     IF( strlen($Values) > 0 )
                         $Values .= ', ';
-                    
-                    Switch(gettype($Value)){
-                        case 'string':
-                            $Values .= '\''.$Value.'\'';
-                            break;
-                        
-                        case 'boolean':
-                            $Values .= $Value ? 'true' : 'false';
-                            break;
-                        
-                        case 'double':
-                        case 'integer':
-                            $Values .= $Value;
-                            break;
-                        
-                        case 'NULL':
-                            $Values .= 'NULL';
-                            break;
-                        
-                        case 'object':
-                        case 'array':
-                            $Values .= json_encode($Value);
-                            break;
-                    }
+
+                    $Values .= self::getValue($Value);
                 }
-        
-                
+
                 $Format .= ' ( '.$Keys.' ) VALUES ( '.$Values.' )';
             }
             
             $Conditions = $Query->getConditions();
-            
+
             IF(!is_array($Conditions) && ( is_subclass_of($Conditions, 'Condition') || get_class($Conditions) == 'Condition' ))
                 $Conditions = Array($Conditions);
-            
+
             IF(sizeof($Conditions) > 0){
                 $Conditions_String = '';
                 /* @var $Condition ICondition */
                 ForEach ( (Array) $Conditions As $i => $Condition ){
                     IF($i > 0)
-                        $Conditions_String .= ' '.$Condition->getType().' ';
+                        $Conditions_String .= ' '.$Query->getJoiner().' ';
                     $Conditions_String .= String::Format('`{0}` {1} \'{2}\'', $Condition->getKey(), $Condition->getOperator(), $this->Escape($Condition->getValue()));
                 }
                 $Format .= ' WHERE '.$Conditions_String;
@@ -164,7 +171,9 @@
         }
         
         Public Function Update( $Table, $Object, IQuery $Query ){
-            
+            //print_r($this->getQuery( 'UPDATE {table}', Query::All( Query::UpdateObject($Object), $Query ), $Table ));
+            //exit;
+            return mysql_query( $this->getQuery( 'UPDATE {table}', Query::All( Query::UpdateObject($Object), $Query ), $Table ) );
         }
         
         Public Function Truncate( $Table ){
