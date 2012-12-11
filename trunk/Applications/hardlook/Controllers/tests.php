@@ -1,23 +1,32 @@
 <?
     Class tests {
-        # GET /test/model #
+        # GET /test
         Public Function Index(){
             $response = '';
             $Driver = Driver::Get();
+
             $response .= 'Connecting... ';
             $response .= $Driver->Connect() ? 'true' : 'false';
+
+            //$response .= $users->Count();
+            /*$user = new User;
+            $user->login = 'DENFER';
+            $user->password = '123123';
+            $user->save();
+            $user->password = md5($user->password);
+            $user->save();*/
+
             $users = Collection::Get('users', 'User');
-            $response .= $users->Count();
-            $user = new User;
-            $user->login = 'sock';
-            $user->password = 'test';
-            $users->Insert($user);
             
-            $userslist = $users->Find(Query::None());
+
+            //$user->password = md5($user->password);
+            //$user->save();
+
+            //$userslist = Collection::Get('users', 'User')->Find(Query::None());
             /* @var User[] $userlist */
-            $userslist[0] -> id = 2;
+            //$userslist[0] -> id = 2;
             
-            $response .= json_encode( $userslist );
+            //$response .= json_encode( $userslist );
             
             return new ActionResult($response);
             

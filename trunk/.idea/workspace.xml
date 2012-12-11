@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ecbd81cf-c25e-4f4f-a796-685105c870bb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Locale" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Locale" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Controllers/Main.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Locale/ru" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Locale/ua" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Views/Registration.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Applications/hardlook/Views/main.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Locale/Localization.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Applications/hardlook/Controllers/Users.php" afterPath="$PROJECT_DIR$/Applications/hardlook/Controllers/Users.php" />
+    <list default="true" readonly="true" id="ecbd81cf-c25e-4f4f-a796-685105c870bb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php" afterPath="$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Applications/hardlook/Core/Application.php" afterPath="$PROJECT_DIR$/Applications/hardlook/Core/Application.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Application/Router/Router.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Router/Router.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Application/Views/View.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Views/View.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Classes/Assets.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Classes/Assets.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Utils/Converter.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Utils/Converter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MOVED" beforePath="E:\xampp\htdocs\DMPF\Applications\hardlook\Assets\scripts\bootstrap.js" afterPath="$PROJECT_DIR$/Applications/hardlook/Assets/js/bootstrap.js" />
-      <change type="MOVED" beforePath="E:\xampp\htdocs\DMPF\Applications\hardlook\Assets\scripts\bootstrap.min.js" afterPath="$PROJECT_DIR$/Applications/hardlook/Assets/js/bootstrap.min.js" />
-      <change type="MOVED" beforePath="E:\xampp\htdocs\DMPF\Applications\hardlook\Assets\scripts" afterPath="$PROJECT_DIR$/Applications/hardlook/Assets/js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Applications/hardlook/Core/Routes" afterPath="$PROJECT_DIR$/Applications/hardlook/Core/Routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Applications/hardlook/Models/User.php" afterPath="$PROJECT_DIR$/Applications/hardlook/Models/User.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Application/Models/IModel.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Models/IModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Application/Models/Model.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Application/Models/Model.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/Collection.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/Collection.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/Condition.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/Condition.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/ICondition.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/ICondition.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/IQuery.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/IQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DMPF/Kernel/Database/Query.php" afterPath="$PROJECT_DIR$/DMPF/Kernel/Database/Query.php" />
     </list>
     <ignored path="DMPF.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,37 +33,19 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tests.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="tests.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="5" selection-start="1213" selection-end="1213" vertical-scroll-proportion="-19.615385">
+            <state line="19" column="12" selection-start="577" selection-end="577" vertical-scroll-proportion="0.38270143">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MySQL.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php">
+      <file leaf-file-name="Main.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/Main.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="144" column="50" selection-start="5440" selection-end="5440" vertical-scroll-proportion="-5.6538463">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Assets.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Classes/Assets.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="963" column="43" selection-start="51096" selection-end="51096" vertical-scroll-proportion="-89.03846">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="22" selection-start="89" selection-end="89" vertical-scroll-proportion="-2.6153846">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -79,52 +54,70 @@
       <file leaf-file-name="Users.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/Users.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="57" selection-start="351" selection-end="351" vertical-scroll-proportion="-6.5384617">
+            <state line="17" column="9" selection-start="549" selection-end="549" vertical-scroll-proportion="-11.115385">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Registration.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/Registration.php">
+      <file leaf-file-name="User.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Models/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="7" selection-start="617" selection-end="617" vertical-scroll-proportion="0.18127961">
+            <state line="5" column="5" selection-start="133" selection-end="133" vertical-scroll-proportion="-3.2692308">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ru" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Locale/ru">
+      <file leaf-file-name="Model.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Models/Model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
+            <state line="19" column="0" selection-start="412" selection-end="412" vertical-scroll-proportion="-12.423077">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
+      <file leaf-file-name="IModel.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Models/IModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="24" selection-start="176" selection-end="176" vertical-scroll-proportion="-4.576923">
+            <state line="23" column="25" selection-start="515" selection-end="515" vertical-scroll-proportion="-15.038462">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ua" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Locale/ua">
+      <file leaf-file-name="MySQL.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
+            <state line="161" column="27" selection-start="5903" selection-end="5903" vertical-scroll-proportion="-10.884615">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="demo.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/demo.php">
+      <file leaf-file-name="IQuery.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/IQuery.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="49" selection-start="49" selection-end="49" vertical-scroll-proportion="-0.0">
+            <state line="97" column="0" selection-start="2136" selection-end="2136" vertical-scroll-proportion="-27.884615">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Query.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Query.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="197" column="43" selection-start="5692" selection-end="5692" vertical-scroll-proportion="-10.230769">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profile.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/profile.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -140,22 +133,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Applications/hardlook/Controllers/Main.php" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Core/Application.php" />
-        <option value="$PROJECT_DIR$/DMPF/Kernel/Utils/Converter.php" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Views/Main.php" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Locale/ru.ini" />
-        <option value="$PROJECT_DIR$/DMPF/Bootstrap.php" />
-        <option value="$PROJECT_DIR$/DMPF/Kernel/Application/Locale/Localization.php" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Locale/ru" />
-        <option value="$PROJECT_DIR$/Applications/hardlook/Views/main.php" />
         <option value="$PROJECT_DIR$/DMPF/Kernel/Application/Views/View.php" />
         <option value="$PROJECT_DIR$/Applications/hardlook/Controllers/Users.php" />
         <option value="$PROJECT_DIR$/Applications/hardlook/Views/Registration.php" />
         <option value="$PROJECT_DIR$/DMPF/Kernel/Classes/Assets.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/Applications/hardlook/Locale/ua" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/ICondition.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/Condition.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/IQuery.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/Query.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Database/Collection.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Application/Models/IModel.php" />
+        <option value="$PROJECT_DIR$/Applications/hardlook/Models/User.php" />
+        <option value="$PROJECT_DIR$/DMPF/Kernel/Application/Models/Model.php" />
+        <option value="$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php" />
       </list>
     </option>
   </component>
@@ -738,6 +731,7 @@
     <option name="IGNORE_EXTERNALS" value="false" />
     <configuration useDefault="false">C:\Users\Липский\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
   </component>
   <component name="SvnFileUrlMappingImpl">
     <option name="myMappingRoots">
@@ -759,13 +753,14 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="ecbd81cf-c25e-4f4f-a796-685105c870bb" name="Default" comment="" />
       <created>1355134746142</created>
       <updated>1355134746142</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -773,7 +768,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14514408" sideWeight="0.6703911" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14674494" sideWeight="0.6703911" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -783,8 +778,8 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -840,86 +835,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Models/User.php">
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/Registration.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="5" selection-start="98" selection-end="98" vertical-scroll-proportion="0.08056872">
+        <state line="9" column="7" selection-start="617" selection-end="617" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/Main.php">
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="42" selection-start="121" selection-end="121" vertical-scroll-proportion="0.08056872">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/profile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.002406739">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Locale/Localization.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="13" selection-start="1083" selection-end="1083" vertical-scroll-proportion="0.5770142">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Views/View.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="42" selection-start="2684" selection-end="2684" vertical-scroll-proportion="0.18170878">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DMPF/Bootstrap.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="59" selection-start="280" selection-end="280" vertical-scroll-proportion="0.22156398">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="5" selection-start="1213" selection-end="1213" vertical-scroll-proportion="-19.615385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Classes/Assets.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="963" column="43" selection-start="51096" selection-end="51096" vertical-scroll-proportion="-89.03846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="50" selection-start="5440" selection-end="5440" vertical-scroll-proportion="-5.6538463">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Locale/ru">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="24" selection-start="176" selection-end="176" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Locale/ua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
+        <state line="4" column="22" selection-start="89" selection-end="89" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
@@ -931,23 +856,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/main.php">
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/profile.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="22" selection-start="89" selection-end="89" vertical-scroll-proportion="-2.6153846">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Condition.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="60" selection-start="487" selection-end="487" vertical-scroll-proportion="0.36255923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/ICondition.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="35" selection-start="437" selection-end="437" vertical-scroll-proportion="0.38270143">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/IQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="0" selection-start="2136" selection-end="2136" vertical-scroll-proportion="-27.884615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Query.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="197" column="43" selection-start="5692" selection-end="5692" vertical-scroll-proportion="-10.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Drivers/MySQL.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="161" column="27" selection-start="5903" selection-end="5903" vertical-scroll-proportion="-10.884615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Database/Collection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="40" selection-start="921" selection-end="921" vertical-scroll-proportion="0.45616114">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Models/IModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="25" selection-start="515" selection-end="515" vertical-scroll-proportion="-15.038462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/Main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/Users.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="57" selection-start="351" selection-end="351" vertical-scroll-proportion="-6.5384617">
+        <state line="17" column="9" selection-start="549" selection-end="549" vertical-scroll-proportion="-11.115385">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Views/Registration.php">
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Models/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="7" selection-start="617" selection-end="617" vertical-scroll-proportion="0.18127961">
+        <state line="5" column="5" selection-start="133" selection-end="133" vertical-scroll-proportion="-3.2692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DMPF/Kernel/Application/Models/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="412" selection-end="412" vertical-scroll-proportion="-12.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Applications/hardlook/Controllers/tests.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="12" selection-start="577" selection-end="577" vertical-scroll-proportion="0.38270143">
           <folding />
         </state>
       </provider>

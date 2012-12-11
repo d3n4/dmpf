@@ -2,17 +2,18 @@
     Class Collection implements ICollection {
         
         Protected Static $m_Collections = Array();
-        Protected $m_Colleciton;
+        Protected $m_Collection;
         Protected $m_Type;
         
         Public Function __construct($Collection, $Type = 'Model') {
-            $this->m_Colleciton = $Collection;
+            $this->m_Collection = $Collection;
             $this->m_Type = $Type;
         }
         
         /**
          * Get collection by name
-         * @param ICollection $Collection collection name
+         * @param string $Collection collection name
+         * @param string $Type model type
          * @return ICollection
          */
         Public Static Function Get($Collection, $Type = 'Model'){
@@ -28,7 +29,7 @@
          * @return boolean Result
          */
         Public Function Insert($Object) {
-            return Driver::Get()->Insert($this->m_Colleciton, $Object);
+            return Driver::Get()->Insert($this->m_Collection, $Object);
         }
         
         /**
@@ -37,7 +38,7 @@
          * @return Model[] Result
          */
         Public Function Select(IQuery $Query) {
-            return Driver::Get()->Select($this->m_Colleciton, $Query, $this->m_Type);
+            return Driver::Get()->Select($this->m_Collection, $Query, $this->m_Type);
         }
         
         /**
@@ -46,7 +47,7 @@
          * @return Model[] Result
          */
         Public Function Find(IQuery $Query) {
-            return Driver::Get()->Select($this->m_Colleciton, $Query, $this->m_Type);
+            return Driver::Get()->Select($this->m_Collection, $Query, $this->m_Type);
         }
         
         /**
@@ -55,7 +56,7 @@
          * @return boolean Result
          */
         Public Function Delete(IQuery $Query) {
-            return Driver::Get()->Delete($this->m_Colleciton, $Query);
+            return Driver::Get()->Delete($this->m_Collection, $Query);
         }
         
         /**
@@ -65,7 +66,7 @@
          * @return boolean Result
          */
         Public Function Update($Object, IQuery $Query) {
-            return Driver::Get()->Update($this->m_Colleciton, $Object, $Query);
+            return Driver::Get()->Update($this->m_Collection, $Object, $Query);
         }        
         
         /**
@@ -73,7 +74,7 @@
          * @return boolean Result
          */
         Public Function Truncate() {
-            return Driver::Get()->Truncate($this->m_Colleciton);
+            return Driver::Get()->Truncate($this->m_Collection);
         }
         
         /**
@@ -81,6 +82,6 @@
          * @return integer Count items in collection
          */
         Public Function Count() {
-            return Driver::Get()->Count($this->m_Colleciton);
+            return Driver::Get()->Count($this->m_Collection);
         }
     }

@@ -6,6 +6,12 @@
          * @return array|object object
          */
         Public Function getObject();
+
+        /**
+         * Get update object
+         * @return array|object object
+         */
+        Public Function getUpdateObject();
         
         /**
          * Get fields
@@ -18,6 +24,12 @@
          * @return bool one
          */
         Public Function getOne();
+
+        /**
+         * Get joiner
+         * @return bool one
+         */
+        Public Function getJoiner();
         
         /**
          * Get Limit
@@ -77,4 +89,16 @@
          * @param array|object $Object
          */
         Public Function setObject($Object);
+
+        /**
+         * Set update object
+         * @param array|object $Object
+         */
+        Public Function setUpdateObject($Object);
+
+        /**
+         * Set joiner
+         * @param string $Joiner
+         */
+        Public Function setJoiner($Joiner);
     }

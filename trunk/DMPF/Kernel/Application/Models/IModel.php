@@ -17,4 +17,9 @@
          * @return IModel Model
          */
         Public Function Set($Key, $Value);
+
+        /**
+         * Save or Update Model
+         */
+        Public Function save();
     }

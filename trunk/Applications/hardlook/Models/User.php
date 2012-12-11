@@ -1,5 +1,6 @@
 <?
     Class User extends Model {
-        Public $login = '';
-        Public $password = '';
+        Protected $CollectionName = 'users';
+        Public $login;
+        Public $password;
     }
